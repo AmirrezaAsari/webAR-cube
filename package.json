@@ -1,5 +1,5 @@
 {
-  "name": "web-ar-boilerplate",
+  "name": "web-ar-cube",
   "version": "1.0.0",
   "description": "A WebXR AR application",
   "main": "index.ts",
@@ -7,11 +7,6 @@
     "start": "webpack serve",
     "start:live": "concurrently --names 'wds,localtunnel' --prefix-colors 'green,yellow' --kill-others-on-fail \"npm start\" \"lt --port 8080\"",
     "build": "webpack build"
-  },
-  "author": "Vishnu Sivan <codemaker2015@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/codemaker2015/web-ar-boilerplate"
   },
   "license": "ISC",
   "devDependencies": {
