@@ -38,10 +38,7 @@ module.exports = {
       title: "Development",
       template: "./index.html",
       favicon: false,
-    }),
-    new CopyWebpackPlugin({
-      patterns: [{ from: "./assets/models", to: "./assets/models" }],
-    }),
+    })
   ],
   output: {
     filename: "[name].bundle.js",

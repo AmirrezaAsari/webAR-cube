@@ -24,29 +24,14 @@ export async function browserHasImmersiveArCompatibility(): Promise<boolean> {
  */
 export function displayUnsupportedBrowserMessage(): void {
   const appRoot: HTMLElement | null = document.getElementById("app-root");
-  const bigMessage: HTMLParagraphElement = document.createElement("p");
-
-  bigMessage.innerText = "😢 Oh no!";
-  if (appRoot) {
-    appRoot.appendChild(bigMessage);
-  }
-
   const middleMessage: HTMLParagraphElement = document.createElement("p");
   middleMessage.innerText =
-    "Your browser does not seem to support augmented reality with WebXR.";
+    "Your browser does not seem to support augmented reality with WebXR. try running the app using a new version of chrome in an Android device.";
 
   if (appRoot) {
     appRoot.appendChild(middleMessage);
   }
 
-  const helpMessage: HTMLParagraphElement = document.createElement("p");
-
-  helpMessage.innerText =
-    "Try opening the page using a recent version of Chrome on Android.";
-
-  if (appRoot) {
-    appRoot.appendChild(helpMessage);
-  }
 }
 
 /**
@@ -57,7 +42,7 @@ export function displayIntroductionMessage() {
   const appRoot: HTMLElement | null = document.getElementById("app-root");
 
   const bigMessage: HTMLParagraphElement = document.createElement("h1");
-  bigMessage.innerText = "Welcome! 👋";
+  bigMessage.innerText = "Welcome!";
 
   const middleMessage: HTMLParagraphElement = document.createElement("p");
   middleMessage.innerText = "Press the button below to enter the AR experience.";
