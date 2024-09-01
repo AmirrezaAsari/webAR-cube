@@ -11,6 +11,6 @@ This will start the app and create a local tunnel using `lt`. When you run the a
 
 ```bash
 curl ipv4.icanhazip.com
-
+```
 
 This project is based on the following guide: https://codemaker2016.medium.com/develop-your-first-webar-app-using-webxr-and-three-js-7a437cb00a92.
