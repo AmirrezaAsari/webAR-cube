@@ -26,7 +26,7 @@ function initializeXRApp() {
   // Create the AR button element, configure our XR session, and append it to the DOM.
   document.body.appendChild(ARButton.createButton(
     renderer,
-    { requiredFeatures: ["hit-test"] },
+    { requiredFeatures: ["hit-test"], optionalFeatures: ['light-estimation'] },
   ));
 
   // Pass the renderer to the createScene-funtion.

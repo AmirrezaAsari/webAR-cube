@@ -1,4 +1,4 @@
-import { WebGLRenderer, XRFrame, XRHitTestSource } from "three";
+import { Mesh, WebGLRenderer, XRFrame, XRHitTestSource } from "three";
 
 let hitTestSource: XRHitTestSource;
 let hitTestSourceRequested = false;
@@ -39,6 +39,13 @@ export function handleXRHitTest(
   
           if (xrHitPose) {
             xrHitPoseMatrix = xrHitPose.transform.matrix;
+            // // Assuming the surface is a plane, extract scale or size from matrix
+            // // For simplicity, we'll assume the scale values are on the matrix's diagonal.
+            // const scaleX = Math.sqrt(xrHitPoseMatrix[0] ** 2 + xrHitPoseMatrix[1] ** 2 + xrHitPoseMatrix[2] ** 2);
+            // const scaleY = Math.sqrt(xrHitPoseMatrix[4] ** 2 + xrHitPoseMatrix[5] ** 2 + xrHitPoseMatrix[6] ** 2);
+
+            // // Resize the plane (assuming you have a THREE.js PlaneGeometry)
+            // plane.geometry.scale(scaleX, scaleY, 1); // Scale in X and Y direction
             onHitTestResultReady(xrHitPoseMatrix);
           }
         }
