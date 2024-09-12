@@ -1,12 +1,12 @@
 import {
-  BoxBufferGeometry,
-  Mesh,
-  MeshBasicMaterial,
+  AmbientLight,
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
   XRFrame,
 } from "three";
+import { createPlaneMarker } from './objects/PlaneMaker';
+import { handleXRHitTest } from './utils/hittest';
 
 export function createScene(renderer: WebGLRenderer) {
   const scene = new Scene()
@@ -16,21 +16,26 @@ export function createScene(renderer: WebGLRenderer) {
     window.innerWidth / window.innerHeight,
     0.02,
     20,
-  )
+  );
+  const ambientLight = new AmbientLight(0xffffff, 1.0);
+  scene.add(ambientLight);
 
-  const geometry = new BoxBufferGeometry(1, 1, 1);
-  const material = new MeshBasicMaterial({ color: 0x00ff00 });
-  const cube = new Mesh(geometry, material);
-  cube.position.z = -4;
+  const planeMarker = createPlaneMarker();
+  scene.add(planeMarker);
 
-  scene.add(cube);
-
-  const renderLoop = (timestamp: number, frame?: XRFrame) => {
-    // Rotate cube
-    cube.rotation.y += 0.01;
-    cube.rotation.x += 0.01;
-
+  const renderLoop = (timestamp: number, frame?: XRFrame) => {   
     if (renderer.xr.isPresenting) {
+
+      if (frame) {
+        handleXRHitTest(renderer, frame, (hitPoseTransformed: Float32Array) => {
+          if (hitPoseTransformed) {
+            planeMarker.visible = true;
+            planeMarker.matrix.fromArray(hitPoseTransformed);
+          }
+        }, () => {
+          planeMarker.visible = false;
+        })
+      }
       renderer.render(scene, camera);
     }
   }
