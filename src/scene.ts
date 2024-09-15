@@ -5,9 +5,13 @@ import {
   PerspectiveCamera,
   PlaneGeometry,
   Scene,
-  WebGLRenderer,
   XRFrame,
+  WebGLRenderer,
   Mesh,
+  CubeRefractionMapping,
+  DoubleSide,
+  ColorRepresentation,
+  Color,
 } from "three";
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight';
 import { createPlaneMarker } from './objects/PlaneMaker';
@@ -48,29 +52,37 @@ export function createScene(renderer: WebGLRenderer) {
 
   const planeMarker = createPlaneMarker();
   scene.add(planeMarker);
-  planeMarker.castShadow = true;    // Enable the wall to cast shadows
-  planeMarker.receiveShadow = true; // Enable the wall to receive shadows
 
   const controller = renderer.xr.getController(0);
   scene.add(controller);
 
   controller.addEventListener("select", onSelect);
 
+  function createWall() {
+    // Get the color from the HTML input
+    const colorInput = document.getElementById('colorPicker') as HTMLInputElement;
+    const selectedColor = colorInput.value; // This gives the color in hex format, like "#00ff00"
+    const color = parseInt(selectedColor.replace('#', '0x'));
+    const wallGeometry = new PlaneGeometry(0.5, 0.5);
+    const wallMaterial = new MeshBasicMaterial({
+      color: color, 
+      opacity: 0.70, 
+      transparent: true, 
+      side: DoubleSide
+    });
+    const wall = new Mesh(wallGeometry, wallMaterial);
+    const model = wall.clone();
+  
+    model.position.setFromMatrixPosition(planeMarker.matrix);
+    model.rotation.z = 0; // Rotate the model as needed
+    model.visible = true;
+  
+    scene.add(model);
+  }
+  
   function onSelect() {
     if (planeMarker.visible) {
-        const wallGeometry = new PlaneGeometry(1, 1);
-        //check palneBufferGeometry later
-        const wallMaterial = new MeshBasicMaterial({ color: 0x00ff00 });
-        const wall = new Mesh(wallGeometry, wallMaterial)
-        const model = wall.clone();
-
-        model.position.setFromMatrixPosition(planeMarker.matrix);
-
-        // Rotate the model randomly to give a bit of variation to the scene.
-        model.rotation.y = Math.random() * (Math.PI * 2);
-        model.visible = true;
-
-        scene.add(model);
+      createWall();
     }
   }
 
