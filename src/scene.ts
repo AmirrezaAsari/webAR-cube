@@ -12,6 +12,8 @@ import {
   DoubleSide,
   ColorRepresentation,
   Color,
+  BufferGeometry,
+  BufferAttribute,
 } from "three";
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight';
 import { createPlaneMarker } from './objects/PlaneMaker';
@@ -67,7 +69,7 @@ export function createScene(renderer: WebGLRenderer) {
     const wallMaterial = new MeshBasicMaterial({
       color: color, 
       opacity: 0.70, 
-      transparent: true, 
+      transparent: false, 
       side: DoubleSide
     });
     const wall = new Mesh(wallGeometry, wallMaterial);
